@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import CodeMirror from 'react-codemirror';
 import 'codemirror/lib/codemirror.css';
 import './App.css'
 import {Controlled as CodeMirror} from 'react-codemirror2'
@@ -13,7 +12,7 @@ export default class App extends Component {
     super();
     this.state = {
       name: 'CodeMirror',
-      code: ':)'
+      code: '🌹💕🐱‍🚀 MODE: XML'
     };
   }
 
@@ -31,7 +30,7 @@ export default class App extends Component {
 		};
     return (
       <div>
-        <p>
+        <p className="op">
           {this.state.code}
         </p>
         {/* <CodeMirror value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} /> */}

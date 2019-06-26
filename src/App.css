@@ -1,6 +1,10 @@
+.op{
+  height: 300px;;
+}
+
 .CodeMirror{
   font-family: monospace;
   font-size: 21pt;
-  height: 100%;
+  height: 300px;
   /* background-color: #44475a; */
 }
