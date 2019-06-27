@@ -5,6 +5,13 @@
 .CodeMirror{
   font-family: monospace;
   font-size: 21pt;
-  height: 300px;
+  height: 400px;
   /* background-color: #44475a; */
+}
+
+.toggler {
+  width: 200px;
+  position: relative;
+  left: 50%;
+  margin: 40px 0 40px -100px
 }

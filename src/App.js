@@ -1,50 +1,25 @@
 import React, { Component } from 'react';
-import 'codemirror/lib/codemirror.css';
-import './App.css'
-import {Controlled as CodeMirror} from 'react-codemirror2'
-import 'codemirror/mode/xml/xml'
-import 'codemirror/theme/dracula.css'
- 
+ import 'bootstrap/dist/css/bootstrap.min.css'
+ import { Switch , Route } from 'react-router-dom';
+import AppNav from './components/AppNav'
+import XML from './components/XML'
+import JS from './components/JS'
+import Home from './components/Home'
 
 
 export default class App extends Component {
-  constructor(){
-    super();
-    this.state = {
-      name: 'CodeMirror',
-      code: '🌹💕🐱‍🚀 MODE: XML'
-    };
-  }
 
-  updateCode = (newCode) => {
-		this.setState({
-      code: newCode,
-		});
-	}
-
-  render() {
-    const options = {
-      lineNumbers: true,
-      mode: 'xml',
-      theme: 'dracula'
-		};
+  render() {  
+    
     return (
-      <div>
-        <p className="op">
-          {this.state.code}
-        </p>
-        {/* <CodeMirror value={this.state.code} onChange={this.updateCode} options={options} autoFocus={true} /> */}
-        <CodeMirror
-          value={this.state.code}
-          options={options}
-          onBeforeChange={(editor, data, code) => {
-            this.setState({code});
-          }}
-          onChange={(editor, data, code) => {
-            this.updateCode(code)
-          }}
-        />
-      </div>
+      <React.Fragment>
+        <AppNav />
+        <Switch>
+          <Route exact path="/" component={Home}/>
+          <Route path="/xml" component={XML}/>
+          <Route path="/js" component={JS}/>
+        </Switch>
+      </React.Fragment>
     );
   }
 }
