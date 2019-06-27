@@ -7,6 +7,7 @@
     "codemirror": "^5.48.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.9",
+    "react-codemirror": "^1.0.0",
     "react-codemirror2": "^6.0.0",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",

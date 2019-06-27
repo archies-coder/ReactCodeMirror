@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import 'codemirror/lib/codemirror.css';
 import '../App.css'
-import {Controlled as CodeMirror} from 'react-codemirror2'
+import CodeMirror from 'react-codemirror'
 import 'codemirror/mode/xml/xml.js'
 import 'codemirror/theme/dracula.css'
 import Hello from './Hello'
@@ -20,6 +20,7 @@ export default class XML extends Component {
     updateCode = (newCode) => {
 		this.setState({
       code: newCode,
+      // viewOpToggle: true
 		});
     }
   
@@ -39,13 +40,11 @@ export default class XML extends Component {
         return (
             <div>
                 <CodeMirror
-          ref={this.code}
-          value={this.state.code}
-          options={options}
-          onBeforeChange={(editor, data, code) => {
-            this.setState({code});
-          }}
-        />
+                  value={this.state.code}
+                  options={options}
+                  onChange={this.updateCode}
+                />
+
         <div className="btn btn-primary p-2 my-3 toggler" onClick={this.handleSubmit}>Toggle Code Display</div>
         {this.state.viewOpToggle &&
          <Hello code={this.state.code} />
