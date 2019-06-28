@@ -3,7 +3,7 @@ import 'codemirror/lib/codemirror.css';
 import '../App.css'
 import CodeMirror from 'react-codemirror'
 import 'codemirror/mode/javascript/javascript'
-import 'codemirror/theme/dracula.css'
+import 'codemirror/theme/darcula.css'
 import Hello from './Hello'
 
 
@@ -34,7 +34,7 @@ export default class XML extends Component {
             lineNumbers: true,
             matchBrackets: true,
             mode: 'javascript',
-            theme: 'dracula'
+            theme: 'darcula'
         };
         return (
             <div>

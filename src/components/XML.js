@@ -3,6 +3,10 @@ import 'codemirror/lib/codemirror.css';
 import '../App.css'
 import CodeMirror from 'react-codemirror'
 import 'codemirror/mode/xml/xml.js'
+import 'codemirror/addon/edit/closetag'
+import 'codemirror/addon/edit/matchtags'
+import 'codemirror/addon/edit/matchbrackets'
+import 'codemirror/addon/edit/closebrackets'
 import 'codemirror/theme/dracula.css'
 import Hello from './Hello'
 
@@ -13,7 +17,7 @@ export default class XML extends Component {
         this.state = {
           name: 'CodeMirror',
           code: '🌹💕🐱‍🚀 <MODE>: </XML>',
-          viewOpToggle : false
+          viewOpToggle : false,
         };
     }
 
@@ -35,7 +39,10 @@ export default class XML extends Component {
             lineNumbers: true,
             matchBrackets: true,
             mode: 'xml',
-            theme: 'dracula'
+            theme: 'dracula',
+            autoCloseTags: true,
+            matchTags: true,
+            autoCloseBrackets: true
         };
         return (
             <div>
