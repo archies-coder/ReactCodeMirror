@@ -1,5 +1,5 @@
 import React from 'react'
 
-const Hello = props => <h1>{props.code}</h1>;
+const Hello = props => <h2>{props.code}</h2>;
 
 export default Hello;

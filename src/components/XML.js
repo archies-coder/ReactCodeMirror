@@ -9,6 +9,8 @@ import 'codemirror/addon/edit/matchbrackets'
 import 'codemirror/addon/edit/closebrackets'
 import 'codemirror/theme/dracula.css'
 
+import 'codemirror/keymap/sublime'
+
 import 'codemirror/addon/hint/xml-hint'
 import 'codemirror/addon/hint/show-hint'
 import 'codemirror/addon/hint/show-hint.css'
@@ -21,13 +23,13 @@ export default class XML extends Component {
         super(props);
         this.state = {
           name: 'CodeMirror',
-          code: '🌹💕🐱‍🚀 <MODE>: </XML> \n<USE Ctrl+Space>',
+          code: '<Mode>\n\t<XML/>\n</Mode>\n<AutoComplete>\n\tCtrl+Space\n</AutoComplete>\n<keyBindings>\n\tSublime\n</KeyBindings> ',
           viewOpToggle : false,
         };
     }
     autoComplete = cm => {
         const codeMirror = this.refs['CodeMirror'].getCodeMirrorInstance();
-        const tags = {
+        const customTags = {
             '!top': ['add','hello'],
             '!attrs': {},
             'add': {
@@ -60,7 +62,7 @@ export default class XML extends Component {
           };
           
         const hintOptions = {
-          schemaInfo: tags,
+          schemaInfo: customTags,
           completeSingle: false,
           completeOnSingleClick: true,
           matchInMiddle: true
@@ -94,6 +96,7 @@ export default class XML extends Component {
             matchTags: true,
             extraKeys: { "Ctrl-Space": this.autoComplete},
             autoCloseBrackets: true,
+            keyMap: "sublime"
         };
         return (
             <div>

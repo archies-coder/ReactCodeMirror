@@ -1,12 +1,11 @@
 .op{
-  height: 300px;;
+  height: 300px;
 }
 
 .CodeMirror{
   font-family: monospace;
-  font-size: 21pt;
-  height: 400px;
-  /* background-color: #44475a; */
+  font-size: 18pt;
+  height: 450px;
 }
 
 .toggler {
