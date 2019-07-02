@@ -5,6 +5,7 @@ import AppNav from './components/AppNav'
 import XML from './components/XML'
 import JS from './components/JS'
 import Home from './components/Home'
+import Tree from './components/Tree'
 
 
 export default class App extends Component {
@@ -18,6 +19,7 @@ export default class App extends Component {
           <Route exact path="/" component={Home}/>
           <Route path="/xml" component={XML}/>
           <Route path="/js" component={JS}/>
+          <Route path="/tree" component={Tree}/>
         </Switch>
       </React.Fragment>
     );

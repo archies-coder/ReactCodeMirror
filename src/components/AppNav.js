@@ -20,6 +20,11 @@ const AppNav = () => {
                 JS
               </Link>
             </li>
+            <li className="nav-item ml-5 ">
+              <Link to='/tree' className='nav-link'>
+                Tree
+              </Link>
+            </li>
           </ul>
         </nav>
         </React.Fragment>

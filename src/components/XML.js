@@ -3,6 +3,7 @@ import 'codemirror/lib/codemirror.css';
 import '../App.css'
 import CodeMirror from 'react-codemirror'
 import 'codemirror/mode/xml/xml.js'
+import 'codemirror/mode/htmlmixed/htmlmixed'
 import 'codemirror/addon/edit/closetag'
 import 'codemirror/addon/edit/matchtags'
 import 'codemirror/addon/edit/matchbrackets'
@@ -14,6 +15,8 @@ import 'codemirror/keymap/sublime'
 import 'codemirror/addon/hint/xml-hint'
 import 'codemirror/addon/hint/show-hint'
 import 'codemirror/addon/hint/show-hint.css'
+
+// import 'codemirror/addon/format/formatting'
 
 import Hello from './Hello'
 
@@ -27,6 +30,7 @@ export default class XML extends Component {
           viewOpToggle : false,
         };
     }
+
     autoComplete = cm => {
         const codeMirror = this.refs['CodeMirror'].getCodeMirrorInstance();
         const customTags = {
@@ -68,9 +72,25 @@ export default class XML extends Component {
           matchInMiddle: true
         };
         codeMirror.showHint(cm, codeMirror.hint.auto, hintOptions); 
+        
       };
 
+      // getSelectedRange = () => {
+      //   const codeMirror = this.refs['CodeMirror'].getCodeMirrorInstance();
+      //   return { from: codeMirror.getCursor(true), to: codeMirror.getCursor(false) };
+      // }
       
+      // autoFormatSelection = () => {
+      //   const range = this.getSelectedRange();
+      //   const codeMirror = this.refs['CodeMirror'].getCodeMirrorInstance();
+      //   codeMirror.autoFormatRange(range.from, range.to);
+      // }
+      
+      // commentSelection = (isComment) => {
+      //   const range = this.getSelectedRange();
+      //   const codeMirror = this.refs['CodeMirror'].getCodeMirrorInstance();
+      //   codeMirror.commentRange(isComment, range.from, range.to);
+      // } 
 
     updateCode = (newCode) => {
 		this.setState({
@@ -90,24 +110,28 @@ export default class XML extends Component {
             lineNumbers: true,
             tabSize: 2,
             matchBrackets: true,
-            mode: 'xml',
+            mode: 'htmlmixed',
             theme: 'dracula',
             autoCloseTags: true,
             matchTags: true,
-            extraKeys: { "Ctrl-Space": this.autoComplete},
+            extraKeys: {
+              "Ctrl-Space": this.autoComplete,
+              // "Shift-Tab": this.autoFormatSelection
+            },
             autoCloseBrackets: true,
             keyMap: "sublime"
         };
         return (
             <div>
                 <CodeMirror
-                ref="CodeMirror"           
+                  ref="CodeMirror"           
                   value={this.state.code}
                   options={options}
                   onChange={this.updateCode}
                 />
 
         <div className="btn btn-primary p-2 my-3 toggler" onClick={this.handleSubmit}>Toggle Code Display</div>
+        {/* c */}
         {this.state.viewOpToggle &&
          <Hello code={this.state.code} />
         }
