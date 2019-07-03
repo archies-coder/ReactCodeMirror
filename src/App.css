@@ -1,16 +1,20 @@
-.op{
-  height: 300px;
-}
-
 .CodeMirror{
   font-family: monospace;
   font-size: 18pt;
   height: 450px;
 }
 
+.key-bindings {
+  text-align: center;
+  font-size: 20px;
+  color: rgb(132, 137, 187);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 
+  'Lucida Sans Unicode', Geneva, Verdana;
+}
+
 .toggler {
   width: 200px;
   position: relative;
   left: 50%;
-  margin: 40px 0 40px -100px
+  margin: 40px 0 40px -100px  
 }

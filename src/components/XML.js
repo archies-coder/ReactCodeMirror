@@ -16,9 +16,13 @@ import 'codemirror/addon/hint/xml-hint'
 import 'codemirror/addon/hint/show-hint'
 import 'codemirror/addon/hint/show-hint.css'
 
+import 'codemirror/addon/comment/comment'
+
 // import 'codemirror/addon/format/formatting'
 
 import Hello from './Hello'
+
+import beautify from 'xml-beautifier';
 
 
 export default class XML extends Component {
@@ -29,6 +33,7 @@ export default class XML extends Component {
           code: '<Mode>\n\t<XML/>\n</Mode>\n<AutoComplete>\n\tCtrl+Space\n</AutoComplete>\n<keyBindings>\n\tSublime\n</KeyBindings> ',
           viewOpToggle : false,
         };
+        
     }
 
     autoComplete = cm => {
@@ -75,22 +80,22 @@ export default class XML extends Component {
         
       };
 
-      // getSelectedRange = () => {
-      //   const codeMirror = this.refs['CodeMirror'].getCodeMirrorInstance();
-      //   return { from: codeMirror.getCursor(true), to: codeMirror.getCursor(false) };
+      toggleComment = function(cm) {
+        cm.toggleComment({ indent: true });
+      }
+
+      // toggleSelection = cm => {
+      //   const {from, to} = this.getSelectedRange(cm);
+      //   cm.lineComment(from, to, { indent: true });
       // }
-      
-      // autoFormatSelection = () => {
-      //   const range = this.getSelectedRange();
-      //   const codeMirror = this.refs['CodeMirror'].getCodeMirrorInstance();
-      //   codeMirror.autoFormatRange(range.from, range.to);
+    
+      indentToggle = (cm) => {
+        cm.execCommand('indentAuto');
+      }
+
+      // getSelectedRange = cm => {
+      //   return { from: cm.getCursor(true), to: cm.getCursor(false) };
       // }
-      
-      // commentSelection = (isComment) => {
-      //   const range = this.getSelectedRange();
-      //   const codeMirror = this.refs['CodeMirror'].getCodeMirrorInstance();
-      //   codeMirror.commentRange(isComment, range.from, range.to);
-      // } 
 
     updateCode = (newCode) => {
 		this.setState({
@@ -105,6 +110,7 @@ export default class XML extends Component {
         {viewOpToggle: !this.state.viewOpToggle}
         )
     }
+
     render() {
         const options = {
             lineNumbers: true,
@@ -116,26 +122,27 @@ export default class XML extends Component {
             matchTags: true,
             extraKeys: {
               "Ctrl-Space": this.autoComplete,
-              // "Shift-Tab": this.autoFormatSelection
+              "Shift-Alt": this.indentToggle,
+              "Ctrl-Alt": this.toggleComment
             },
             autoCloseBrackets: true,
             keyMap: "sublime"
         };
         return (
-            <div>
-                <CodeMirror
-                  ref="CodeMirror"           
-                  value={this.state.code}
-                  options={options}
-                  onChange={this.updateCode}
-                />
-
-        <div className="btn btn-primary p-2 my-3 toggler" onClick={this.handleSubmit}>Toggle Code Display</div>
-        {/* c */}
-        {this.state.viewOpToggle &&
-         <Hello code={this.state.code} />
-        }
-            </div>
+          <div>
+            <CodeMirror
+              ref="CodeMirror"           
+              value={this.state.code}
+              options={options}
+              onChange={this.updateCode}
+            />
+            <div className="key-bindings">To Indent, Select and Shift+Alt <br/> To Comment, Select and Ctrl-Alt</div>
+            <div className="btn btn-primary p-2 my-3 toggler" onClick={this.handleSubmit}>Toggle Code Display</div>
+            {/* <div className="btn btn-primary p-2 my-5 " onClick={this.toggleSelection}>Toggle indent</div> */}
+            {this.state.viewOpToggle &&
+            <Hello code={this.state.code} />
+            }
+          </div>
         )
     }
 }

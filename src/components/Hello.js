@@ -1,5 +1,6 @@
 import React from 'react'
+import '../App.css'
 
-const Hello = props => <h2>{props.code}</h2>;
+const Hello = props => <h3 classname='op'>{props.code}</h3>;
 
 export default Hello;

@@ -2,7 +2,13 @@ import React from 'react'
 
 
 const Home = () => {
-    return <h1>HOME PAGE</h1>
+    return <div className='d-flex text-center  justify-content-center' style = {{
+        display: 'flex',
+        color: '#fff',
+        backgroundColor: '#d4254d'
+        }}>
+        <h1>Home</h1>
+    </div>
 }
 
 export default Home;
