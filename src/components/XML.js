@@ -18,11 +18,7 @@ import 'codemirror/addon/hint/show-hint.css'
 
 import 'codemirror/addon/comment/comment'
 
-// import 'codemirror/addon/format/formatting'
-
 import Hello from './Hello'
-
-import beautify from 'xml-beautifier';
 
 
 export default class XML extends Component {
