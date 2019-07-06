@@ -1,33 +1,49 @@
 import React, { Component } from 'react'
 import {Treebeard} from 'react-treebeard';
+import Modal from 'react-modal';
+import Folder from './Folder'
+import File from './File'
+
+const customStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)',
+      width                 : '300px',  
+      height                : '300px',  
+    }
+  };
+
 
 const data = {
     name: 'root',
     toggled: true,
     children: [
         {
-            name: 'parent1',
+            name: 'App',
             children: [
-                { name: 'child1' },
-                { name: 'child2' }
+                { name: 'server.js' },
+                { name: 'data.js' }
             ]
         },
         {
-            name: 'teacher1',
-            // loading: true,
+            name: 'styles',
             children: [
-                {name: 'student1'},
-                {name: 'student2'},
+                {name: 'header.css'},
+                {name: 'footer.css'},
             ]
         },
         {
-            name: 'parent',
+            name: 'client',
             children: [
                 {
-                    name: 'nested parent',
+                    name: 'App',
                     children: [
-                        { name: 'nested child 1' },
-                        { name: 'nested child 2' }
+                        { name: 'index.js' },
+                        { name: 'context.js' }
                     ]
                 }
             ]
@@ -37,9 +53,44 @@ const data = {
 export default class Tree extends Component {
     constructor(props){
         super(props);
-        this.state = {data};
+        this.state = {
+          data,
+          modalIsOpen: false,
+          value: "Enter",
+          activeNode:{}
+        };
     }
-    
+
+    openModal = (node)=> {
+      console.log(node);
+      this.setState({modalIsOpen: true,activeNode:node});
+    }
+   
+   
+    closeModal = ()=> {
+      this.setState({modalIsOpen: false});
+    }
+
+
+    componentWillMount = () => {
+      this.state.data.children.map((child, index)=> {
+        const name1 = child.name;
+        child.name = <div>HI {name1} <span onClick={(e)=>this.openModal(child,e)}><i className="far fa-plus-square"/></span></div>;
+      })
+    }
+
+    handleSubmit = (e) =>{
+      e.preventDefault();
+      const name = e.target.value;
+      this.state.activeNode.children.push({name:this.state.value});
+      const newData = this.state.data;
+      this.setState({data: newData});
+      this.closeModal()
+    }
+    handleChange(event) {
+      this.setState({value: event.target.value});
+    }
+  
     onToggle = (node, toggled) => {
         const {cursor, data} = this.state;
         if (cursor) {
@@ -52,13 +103,29 @@ export default class Tree extends Component {
         this.setState(() => ({cursor: node, data: Object.assign({}, data)}));
     }
     render() {
-        const {data} = this.state;
+        // const {data} = this.state;
         return (
-                <Treebeard
-                data={data}
-                onToggle={this.onToggle}
-                style = {style}
-                />
+          <React.Fragment>
+            <Modal
+            isOpen={this.state.modalIsOpen}
+            onAfterOpen={this.afterOpenModal}
+            onRequestClose={this.closeModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+            >
+              <form onSubmit={(e)=>{this.handleSubmit(e)}}>
+              <input type="text" value={this.state.value} onChange={(e)=>{this.handleChange(e)}} />
+                <input type="submit" value="ENTER"/>
+              </form>
+
+            </Modal>
+            <Treebeard
+              data={this.state.data}
+              onToggle={this.onToggle}
+              style = {style}
+            />
+          </React.Fragment>
+                
         )
     }
 }
