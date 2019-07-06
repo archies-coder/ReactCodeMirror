@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import {Treebeard} from 'react-treebeard';
 import Modal from 'react-modal';
-import Folder from './Folder'
-import File from './File'
+import './Tree.css'
 
 const customStyles = {
     content : {
@@ -14,6 +13,8 @@ const customStyles = {
       transform             : 'translate(-50%, -50%)',
       width                 : '300px',  
       height                : '300px',  
+      backgroundColor       : '#FF80AB',
+      overflow              : 'hidden'
     }
   };
 
@@ -56,14 +57,13 @@ export default class Tree extends Component {
         this.state = {
           data,
           modalIsOpen: false,
-          value: "Enter",
+          value: "",
           activeNode:{}
         };
     }
 
     openModal = (node)=> {
-      console.log(node);
-      this.setState({modalIsOpen: true,activeNode:node});
+      this.setState({ modalIsOpen: true, activeNode:node });
     }
    
    
@@ -71,21 +71,34 @@ export default class Tree extends Component {
       this.setState({modalIsOpen: false});
     }
 
-
-    componentWillMount = () => {
-      this.state.data.children.map((child, index)=> {
+    addIcon = (node) => { 
+      console.log(node);
+      
+        node.map((child)=> {
         const name1 = child.name;
-        child.name = <div>HI {name1} <span onClick={(e)=>this.openModal(child,e)}><i className="far fa-plus-square"/></span></div>;
+        (name1.indexOf('.') === -1) ?
+          child.name = <div><i className="far fa-folder px-2"></i>
+            {name1} <span onClick={(e)=>this.openModal(child,e)}><i className="far fa-plus-square pl-2"/></span></div>
+          : child.name = <div><i className="far fa-file-code px-2"></i> {name1}</div>
+        if(child.children){
+          this.addIcon(child.children)       
+        } 
       })
     }
 
+    componentWillMount = () => {
+      this.addIcon(this.state.data.children)
+    }
+
+
     handleSubmit = (e) =>{
       e.preventDefault();
-      const name = e.target.value;
-      this.state.activeNode.children.push({name:this.state.value});
+      if(this.state.activeNode.children){
+        this.state.activeNode.children.push({name: this.state.value});
+      }
       const newData = this.state.data;
-      this.setState({data: newData});
-      this.closeModal()
+      // this.setState({data: newData});
+      this.closeModal();
     }
     handleChange(event) {
       this.setState({value: event.target.value});
@@ -98,7 +111,7 @@ export default class Tree extends Component {
         }
         node.active = true;
         if (node.children) { 
-            node.toggled = toggled; 
+            node.toggled = toggled;
         }
         this.setState(() => ({cursor: node, data: Object.assign({}, data)}));
     }
@@ -107,15 +120,15 @@ export default class Tree extends Component {
         return (
           <React.Fragment>
             <Modal
-            isOpen={this.state.modalIsOpen}
-            onAfterOpen={this.afterOpenModal}
-            onRequestClose={this.closeModal}
-            style={customStyles}
-            contentLabel="Example Modal"
+              isOpen={this.state.modalIsOpen}
+              onAfterOpen={this.afterOpenModal}
+              onRequestClose={this.closeModal}
+              style={customStyles}
+              contentLabel="Example Modal"
             >
               <form onSubmit={(e)=>{this.handleSubmit(e)}}>
-              <input type="text" value={this.state.value} onChange={(e)=>{this.handleChange(e)}} />
-                <input type="submit" value="ENTER"/>
+                <input id= "child-name" type="text" value={this.state.value} onChange={(e)=>{this.handleChange(e)}} />
+                <input className='btn btn-md btn-dark submit' type="submit" value="ENTER"/>
               </form>
 
             </Modal>
@@ -135,10 +148,10 @@ const style = {
     tree: {
       base: {
         listStyle: 'none',
-        backgroundColor: '#21252B',
+        backgroundColor: '#fff1ff',
         margin: '10px',
         padding: '10px',
-        color: '#9DA5AB',
+        color: '#b00020',
         fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
         fontSize: '18px'
       },
@@ -153,7 +166,7 @@ const style = {
           display: 'block'
         },
         activeLink: {
-          background: '#31363F'
+          background: '#fff'
         },
         toggle: {
           base: {
@@ -174,7 +187,7 @@ const style = {
           height: 14,
           width: 14,
           arrow: {
-            fill: '#9DA5AB',
+            fill: '#b00020',
             strokeWidth: 0
           }
         },
@@ -182,7 +195,7 @@ const style = {
           base: {
             display: 'inline-block',
             verticalAlign: 'top',
-            color: '#9DA5AB'
+            color: '#b00020'
           },
           connector: {
             width: '2px',
